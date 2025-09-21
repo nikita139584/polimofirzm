@@ -1,0 +1,121 @@
+#include <iostream>
+using namespace std;
+class Herbivores {
+	
+	int Weight = 300;
+	string Life = "Yes";
+public:
+	void SetWeight(int Weight) {
+		this->Weight = Weight;
+	}
+	void Eat_grass() {
+		Weight += 10;
+	}
+	int GetWeight() const {
+		return Weight;
+	}
+	void SetLife(string Life) {
+		this->Life = Life;
+	}
+	string GetLife() const {
+		return Life;
+	}
+	void Print() const {
+		cout <<"Weight:" << Weight << "Kg\n";
+		cout <<"Life:" << Life << "\n";
+	}
+};
+class Wildebeest : public Herbivores {
+public:
+	void Print() const {
+		Herbivores::Print();
+	}
+};
+class Bison : public Herbivores {
+public:
+	void Print() const {
+		Herbivores::Print();
+	}
+};
+class Carnivore {
+	int Power;
+	int Eat;
+
+public:
+	void SetPower(int Power) {
+		this->Power = Power;
+	}
+	int GetPower() const {
+		return Power;
+	}
+	void SetEat(int Eat) {
+		this->Eat = Eat;
+	}
+	int GetEat() const {
+		return Eat;
+	}
+	void Print() const {
+		cout << "Power:" << Power << "Kg\n";
+	}
+	void Eat(Herbivores& h) {
+		if (GetPower() < h.GetWeight()) {
+			cout << "The predator is too weak and cannot defeat the animal.\n";
+			GetPower() - 10;
+		}
+		else {
+			cout << "The predator defeated the animal!\n";
+			GetPower() + 10;
+		}
+	}
+
+};
+class Lion : public Carnivore {
+public:
+	void Attack(const Herbivores& h) const {
+
+	}
+};
+class Wolf : public Carnivore {
+public:
+	void Attack(const Herbivores& h) const {
+	}
+};
+int main() {
+	Wildebeest w;
+	w.Print();
+	Carnivore c;
+	Lion l;
+	c.SetPower(200);
+	l.Attack(w);
+	c.Print();
+
+	srand(time(0));
+
+	Herbivores** ar = new Herbivores * [5];
+
+	for (int i = 0; i < 5; i++) {
+		int r = rand() % 2;
+		if (r == 0) ar[i] = new Wildebeest();
+		else ar[i] = new Bison();
+	}
+	for (int i = 0; i < 5; i++) {
+		ar[i]->Print();
+	}
+	delete[] ar;
+
+	cout << "\n";
+	Carnivore** ar_2 = new Carnivore * [5];
+
+	for (int i = 0; i < 5; i++) {
+		int r = rand() % 2;
+		if (r == 0) ar_2[i] = new Lion();
+		else ar_2[i] = new Wolf();
+	}
+	for (int i = 0; i < 5; i++) {
+		ar_2[i]->Print();
+	}
+	delete[] ar_2;
+
+	
+}
+	
